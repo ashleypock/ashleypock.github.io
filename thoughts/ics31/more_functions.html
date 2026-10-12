@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-11-20 Thu 11:42 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>More Functions</title>
+<meta name="author" content="ashley_pock" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">More Functions</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org032e584">1. other stuff to know</a></li>
+<li><a href="#org638e96c">2. typing, but dynamic</a></li>
+<li><a href="#orgab1a54a">3. more arguments</a></li>
+<li><a href="#orgbffd34e">4. asserts, but post-condition</a></li>
+<li><a href="#org844d485">5. exception handling</a></li>
+</ul>
+</div>
+</div>
+<p>
+yeah this is just functions&#x2026; but more.
+</p>
+<div id="outline-container-org032e584" class="outline-2">
+<h2 id="org032e584"><span class="section-number-2">1.</span> other stuff to know</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>incremental development</li>
+<li>function stubs = function definitions that haven&rsquo;t been implemented yet.
+<ul class="org-ul">
+<li>useful when outlining your program and figuring out what sort of functions you want to use.</li>
+<li>use the pass keyword, which doesn&rsquo;t do anything except act as a placeholder until you implement a function.</li>
+</ul></li>
+<li>here are a few examples of function stubs:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">function stub:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">greeting</span>():
+    <span style="color: #51afef;">pass</span>
+
+<span style="color: #525252;"># </span><span style="color: #525252;">can still have multiple arguments in function stub:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">another_greeting</span>(hello, world):
+    <span style="color: #51afef;">pass</span>
+
+<span style="color: #525252;"># </span><span style="color: #525252;">doesn't do anything when called:</span>
+greeting()
+another_greeting(<span style="color: #dd8844; font-weight: bold;">0</span>, <span style="color: #dd8844; font-weight: bold;">1</span>)
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>functions are objects.
+<ul class="org-ul">
+<li>technically everything is an object, but you&rsquo;ll learn more about that later.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org638e96c" class="outline-2">
+<h2 id="org638e96c"><span class="section-number-2">2.</span> typing, but dynamic</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>example: adding together different types.
+<ul class="org-ul">
+<li>adding two numbers.</li>
+<li>concatenating two strings.</li>
+</ul></li>
+<li>polymorphism = an operation/method/function that can be used on different data types.</li>
+<li>here is an example that demonstrates polymorphism:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">add function demonstrates polymorphism:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">add</span>(x, y):
+    <span style="color: #51afef;">return</span> x + y
+
+<span style="color: #c678dd;">print</span>(add(<span style="color: #dd8844; font-weight: bold;">1</span>, <span style="color: #dd8844; font-weight: bold;">2</span>))
+<span style="color: #c678dd;">print</span>(add(<span style="color: #99bb66;">"Hello "</span>, <span style="color: #99bb66;">"World!"</span>))
+
+</pre>
+</div>
+
+<pre class="example">
+3
+Hello World!
+</pre>
+
+
+<ul class="org-ul">
+<li>Python uses dynamic typing.
+<ul class="org-ul">
+<li>dynamic typing = when interpreter figures out data types of objects during runtime.</li>
+</ul></li>
+<li>static typing = when variables and function parameters must have type definitions so that the compiler can figure out valid tasks during compile time.
+<ul class="org-ul">
+<li>C, C++, and Java make use of static typing.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgab1a54a" class="outline-2">
+<h2 id="orgab1a54a"><span class="section-number-2">3.</span> more arguments</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>keyword arguments = mapping arguments to parameters by name when calling a function.
+<ul class="org-ul">
+<li>allow for better readability and clarity if your function requires many arguments.</li>
+<li>if mixed with positional arguments, then keyword arguments must come last.</li>
+</ul></li>
+<li>An error occurs if all positional or keyword arguments aren&rsquo;t listed in the function call.</li>
+<li>here is an example of using keyword arguments:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">print_student</span>(name, age, major):
+    <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"</span>{name}<span style="color: #99bb66;"> is </span>{age}<span style="color: #99bb66;"> years old and their major is </span>{major}<span style="color: #99bb66;">."</span>)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">keyword arguments can be in order:</span>
+print_student(name=<span style="color: #99bb66;">"Alice"</span>, age=<span style="color: #dd8844; font-weight: bold;">20</span>, major=<span style="color: #99bb66;">"Psychology"</span>)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">or out of order:</span>
+print_student(name=<span style="color: #99bb66;">"Bob"</span>, age=<span style="color: #dd8844; font-weight: bold;">19</span>, major=<span style="color: #99bb66;">"Computer Science"</span>)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">not supplying all positional or keyword arguments results in a TypeError:</span>
+<span style="color: #51afef;">try</span>:
+    print_student(<span style="color: #99bb66;">"Alice"</span>, <span style="color: #dd8844; font-weight: bold;">21</span>)
+<span style="color: #51afef;">except</span> <span style="color: #ECBE7B;">TypeError</span> <span style="color: #51afef;">as</span> te:
+    <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"Error: </span>{te}<span style="color: #99bb66;">"</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+Alice is 20 years old and their major is Psychology.
+Bob is 19 years old and their major is Computer Science.
+Error: print_student() missing 1 required positional argument: 'major'
+</pre>
+
+
+<ul class="org-ul">
+<li>default parameter values = allows programmer to specify a default value if an argument is not passed to the parameter.
+<ul class="org-ul">
+<li>the function call doesn&rsquo;t need to have this argument, and if so, the default value will be assigned to the parameter instead.</li>
+<li>should not have a mutable object (such as a list) as a default parameter.
+<ul class="org-ul">
+<li>the same mutable object will continue to be modified for every call to the function rather than a separate copy being generated for each function call.</li>
+</ul></li>
+</ul></li>
+<li>here are a few examples of using default parameter values:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">default parameter value:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">greeting</span>(name, greeting_word=<span style="color: #99bb66;">"Hello"</span>):
+    <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"</span>{greeting_word}<span style="color: #99bb66;">, </span>{name}<span style="color: #99bb66;">!"</span>)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">can call the function with all arguments.</span>
+greeting(<span style="color: #99bb66;">"Alice"</span>, <span style="color: #99bb66;">"Good evening"</span>)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">only required arguments, using "Hello" as the default greeting word</span>
+greeting(<span style="color: #99bb66;">"Bob"</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+Good evening, Alice!
+Hello, Bob!
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">using mutable object as default parameter</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">add_item</span>(item, a_list=[]):
+    a_list.append(item)
+    <span style="color: #51afef;">return</span> a_list
+
+<span style="color: #525252;"># </span><span style="color: #525252;">if a new list were created each time, we would expect the output to be:</span>
+
+<span style="color: #525252;"># </span><span style="color: #525252;">["apples"]</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">["bananas"]</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">["carrots"]</span>
+
+<span style="color: #c678dd;">print</span>(add_item(<span style="color: #99bb66;">"apples"</span>))
+<span style="color: #c678dd;">print</span>(add_item(<span style="color: #99bb66;">"bananas"</span>))
+<span style="color: #c678dd;">print</span>(add_item(<span style="color: #99bb66;">"carrots"</span>))
+
+<span style="color: #525252;"># </span><span style="color: #525252;">instead, a different output is produced because each</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">item is appended to the same default list.</span>
+
+</pre>
+</div>
+
+<pre class="example">
+['apples']
+['apples', 'bananas']
+['apples', 'bananas', 'carrots']
+</pre>
+
+
+<ul class="org-ul">
+<li>*args parameter = takes optional positional parameters and passes them into the function as an arbitrary argument list.
+<ul class="org-ul">
+<li>useful when you may not know how many arguments a function needs.</li>
+</ul></li>
+<li>here is an example of using the *args parameter:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">function with args</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">calculates the sum of an arbitrary number of number arguments.</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">numbers_sum</span>(*args):
+    <span style="color: #dcaeea;">result</span> = <span style="color: #dd8844; font-weight: bold;">0</span>
+    <span style="color: #51afef;">for</span> num <span style="color: #51afef;">in</span> args:
+        <span style="color: #dcaeea;">result</span> += num
+    <span style="color: #51afef;">return</span> result
+
+<span style="color: #c678dd;">print</span>(numbers_sum(<span style="color: #dd8844; font-weight: bold;">1</span>, <span style="color: #dd8844; font-weight: bold;">2</span>, <span style="color: #dd8844; font-weight: bold;">3</span>))
+<span style="color: #c678dd;">print</span>(numbers_sum(<span style="color: #dd8844; font-weight: bold;">100</span>, <span style="color: #dd8844; font-weight: bold;">200</span>, <span style="color: #dd8844; font-weight: bold;">300</span>, <span style="color: #dd8844; font-weight: bold;">400</span>, <span style="color: #dd8844; font-weight: bold;">500</span>))
+<span style="color: #c678dd;">print</span>(numbers_sum())
+
+</pre>
+</div>
+
+<pre class="example">
+6
+1500
+0
+</pre>
+
+
+<ul class="org-ul">
+<li>**kwargs parameter = similar to *args, takes optional keyword arguments and passes them into the function as a dictionary.
+<ul class="org-ul">
+<li>the keys are the parameter names and the values are the values assigned to each of the parameter names.</li>
+</ul></li>
+<li>here is an example of using the **kwargs parameter:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">function with kwargs</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">prints out the keys and values of an arbitrary number of keyword arguments.</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">print_dict</span>(**kwargs):
+    <span style="color: #51afef;">for</span> key, value <span style="color: #51afef;">in</span> kwargs.items():
+        <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"</span>{key}<span style="color: #99bb66;">: </span>{value}<span style="color: #99bb66;">"</span>)
+
+print_dict(name=<span style="color: #99bb66;">"Alice"</span>, age=<span style="color: #dd8844; font-weight: bold;">100</span>, major=<span style="color: #99bb66;">"English"</span>)
+<span style="color: #525252;"># </span><span style="color: #525252;">separator for clarity:</span>
+<span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"-------------------------------------------"</span>)
+print_dict(a=<span style="color: #99bb66;">"1"</span>, b=<span style="color: #99bb66;">"2"</span>, c=<span style="color: #99bb66;">"3"</span>, d=<span style="color: #99bb66;">"4"</span>, e=<span style="color: #99bb66;">"5"</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+name: Alice
+age: 100
+major: English
+-------------------------------------------
+a: 1
+b: 2
+c: 3
+d: 4
+e: 5
+</pre>
+
+
+<ul class="org-ul">
+<li>the asterisks (* and **) are necessary, but they don&rsquo;t have to be named &ldquo;args&rdquo; and &ldquo;kwargs&rdquo;
+<ul class="org-ul">
+<li>you can use any variable names, but the typical convention is to use &ldquo;args&rdquo; and &ldquo;kwargs&rdquo; for arbitrary optional arguments and keyword arguments, respectively.</li>
+</ul></li>
+
+<li>aside: unpacking
+<ul class="org-ul">
+<li>allows you to assign multiple variables to values in a tuple or list.</li>
+<li>typically used if your function returns a tuple of values and you want to assign each value to a different variable.</li>
+</ul></li>
+<li>here are a few unpacking examples:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">can unpack a tuple</span>
+<span style="color: #dcaeea;">coordinates</span> = (<span style="color: #dd8844; font-weight: bold;">3</span>, <span style="color: #dd8844; font-weight: bold;">4</span>, <span style="color: #dd8844; font-weight: bold;">5</span>)
+<span style="color: #dcaeea;">x</span>, <span style="color: #dcaeea;">y</span>, <span style="color: #dcaeea;">z</span> = coordinates
+
+<span style="color: #c678dd;">print</span>(x, y, z)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">or a list</span>
+<span style="color: #dcaeea;">colors</span> = [<span style="color: #99bb66;">"red"</span>, <span style="color: #99bb66;">"yellow"</span>, <span style="color: #99bb66;">"blue"</span>]
+<span style="color: #dcaeea;">color1</span>, <span style="color: #dcaeea;">color2</span>, <span style="color: #dcaeea;">color3</span> = colors
+<span style="color: #c678dd;">print</span>(color1, color2, color3)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">can use unpacking to simultaneously swap the values of two variables</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">(very useful for sorting a list with a for loop)</span>
+<span style="color: #dcaeea;">a</span> = <span style="color: #dd8844; font-weight: bold;">100</span>
+<span style="color: #dcaeea;">b</span> = <span style="color: #dd8844; font-weight: bold;">200</span>
+
+<span style="color: #dcaeea;">a</span>, <span style="color: #dcaeea;">b</span> = b, a
+
+<span style="color: #525252;"># </span><span style="color: #525252;">a = 200</span>
+<span style="color: #525252;"># </span><span style="color: #525252;">b = 100</span>
+<span style="color: #c678dd;">print</span>(a, b)
+
+</pre>
+</div>
+
+<pre class="example">
+3 4 5
+red yellow blue
+200 100
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">you can also unpack a function if it returns multiple values in a tuple or list:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">alices_personal_info</span>():
+    <span style="color: #51afef;">return</span> <span style="color: #99bb66;">"Alice"</span>, <span style="color: #dd8844; font-weight: bold;">200</span>, <span style="color: #99bb66;">"Undeclared"</span>
+
+<span style="color: #dcaeea;">name</span>, <span style="color: #dcaeea;">age</span>, <span style="color: #dcaeea;">major</span> = alices_personal_info()
+
+<span style="color: #c678dd;">print</span>(name)
+<span style="color: #c678dd;">print</span>(age)
+<span style="color: #c678dd;">print</span>(major)
+
+</pre>
+</div>
+
+<pre class="example">
+Alice
+200
+Undeclared
+</pre>
+</div>
+</div>
+<div id="outline-container-orgbffd34e" class="outline-2">
+<h2 id="orgbffd34e"><span class="section-number-2">4.</span> asserts, but post-condition</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>expected output after providing certain inputs.</li>
+<li>should provide just enough post-condition asserts to cover all the output possibilities.</li>
+<li>can be used for test-driven development.</li>
+<li>here&rsquo;s an example of using post-condition asserts (alongside pre-condition asserts) in a function:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">post-condition asserts</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">rectangle_area</span>(length, width):
+    <span style="color: #51afef;">assert</span> <span style="color: #c678dd;">type</span>(length) <span style="color: #51afef;">in</span> (<span style="color: #c678dd;">int</span>, <span style="color: #c678dd;">float</span>), <span style="color: #99bb66;">"length must be type int or float"</span>
+    <span style="color: #51afef;">assert</span> <span style="color: #c678dd;">type</span>(width) <span style="color: #51afef;">in</span> (<span style="color: #c678dd;">int</span>, <span style="color: #c678dd;">float</span>), <span style="color: #99bb66;">"width must be type int or float"</span>
+    <span style="color: #51afef;">assert</span> length &gt; <span style="color: #dd8844; font-weight: bold;">0</span>, <span style="color: #99bb66;">"length must be positive"</span>
+    <span style="color: #51afef;">assert</span> width &gt; <span style="color: #dd8844; font-weight: bold;">0</span>, <span style="color: #99bb66;">"width must be positive"</span>
+
+    <span style="color: #dcaeea;">area</span> = length * width
+
+    <span style="color: #525252;"># </span><span style="color: #525252;">before returning the area to the user, we can use post-condition</span>
+    <span style="color: #525252;"># </span><span style="color: #525252;">asserts to verify that the output is correct.</span>
+    <span style="color: #51afef;">assert</span> area &gt; <span style="color: #dd8844; font-weight: bold;">0</span>, <span style="color: #99bb66;">"area must be positive"</span>
+    <span style="color: #51afef;">assert</span> area == length * width, <span style="color: #99bb66;">"area was calculated incorrectly"</span>
+    <span style="color: #51afef;">return</span> area
+
+<span style="color: #525252;"># </span><span style="color: #525252;">works as intended</span>
+<span style="color: #c678dd;">print</span>(rectangle_area(<span style="color: #dd8844; font-weight: bold;">5</span>, <span style="color: #dd8844; font-weight: bold;">10</span>))
+
+<span style="color: #525252;"># </span><span style="color: #525252;">this will raise an AssertionError since one of the arguments is negative</span>
+<span style="color: #51afef;">try</span>:
+    <span style="color: #c678dd;">print</span>(rectangle_area(<span style="color: #dd8844; font-weight: bold;">2</span>, -<span style="color: #dd8844; font-weight: bold;">3</span>))
+<span style="color: #51afef;">except</span> <span style="color: #ECBE7B;">AssertionError</span> <span style="color: #51afef;">as</span> ae:
+    <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"Error: </span>{ae}<span style="color: #99bb66;">"</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+50
+Error: width must be positive
+</pre>
+</div>
+</div>
+<div id="outline-container-org844d485" class="outline-2">
+<h2 id="org844d485"><span class="section-number-2">5.</span> exception handling</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>used to handle unexpected errors during execution.</li>
+<li>code that may cause an exception/error is placed in a try block.</li>
+<li>if the code raises a specific exception, then the except block is executed.</li>
+<li>you&rsquo;ve already seen some try-except blocks throughout this reading, but here&rsquo;s another example:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">exception handling using try-except blocks</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">divide</span>(top, bottom):
+    <span style="color: #51afef;">try</span>:
+        <span style="color: #dcaeea;">result</span> = top / bottom
+        <span style="color: #c678dd;">print</span>(result)
+    <span style="color: #51afef;">except</span> <span style="color: #ECBE7B;">ZeroDivisionError</span>:
+        <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"Error: cannot divide by 0"</span>)
+    <span style="color: #51afef;">except</span> <span style="color: #ECBE7B;">TypeError</span>:
+        <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"Error: invalid input type for division"</span>)
+
+<span style="color: #525252;"># </span><span style="color: #525252;">valid</span>
+divide(<span style="color: #dd8844; font-weight: bold;">10</span>, <span style="color: #dd8844; font-weight: bold;">2</span>)
+<span style="color: #525252;"># </span><span style="color: #525252;">invalid</span>
+divide(<span style="color: #dd8844; font-weight: bold;">5</span>, <span style="color: #dd8844; font-weight: bold;">0</span>)
+<span style="color: #525252;"># </span><span style="color: #525252;">invalid</span>
+divide(<span style="color: #99bb66;">"hello"</span>, <span style="color: #99bb66;">"world"</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+5.0
+Error: cannot divide by 0
+Error: invalid input type for division
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ashley Pock</p>
+<p class="date">Created: 11/20/2025 Thu</p>
+</div>
+</body>
+</html>
