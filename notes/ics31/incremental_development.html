@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-11-17 Mon 14:04 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Incremental Development</title>
+<meta name="author" content="ashley_pock" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Incremental Development</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgfd73f2d">1. the basic idea</a></li>
+<li><a href="#org519c7a7">2. understand the problem you&rsquo;re trying to solve</a></li>
+<li><a href="#org09f569b">3. program implementation</a></li>
+<li><a href="#org3ade7d0">4. incremental testing</a></li>
+<li><a href="#org28c952c">5. debugging</a></li>
+<li><a href="#orga427f67">6. the S in SOLID principles</a></li>
+<li><a href="#orga07c88f">7. other good practices</a></li>
+</ul>
+</div>
+</div>
+<p>
+incremental development involves taking a problem (such as a lab assignment) and breaking it down into smaller, more manageable pieces, incrementally adding functionality (thus, the name, incremental development).
+</p>
+<ul class="org-ul">
+<li>here are a few important aspects of it:</li>
+</ul>
+<div id="outline-container-orgfd73f2d" class="outline-2">
+<h2 id="orgfd73f2d"><span class="section-number-2">1.</span> the basic idea</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>you want to find a way to break a problem down into smaller parts.</li>
+<li>the example I always like to use is a user inventory for a game.</li>
+<li>trying to tackle it all at once can be overwhelming.</li>
+<li>instead try to break down a problem by cutting out any additional elements that can cause complications and confusion.
+<ul class="org-ul">
+<li>for example, lets ignore implementing the graphic user interface (GUI) for now.
+<ul class="org-ul">
+<li>we want to make sure our implementation works before styling it.</li>
+</ul></li>
+<li>in addition, lets ignore how we&rsquo;re gonna get the inventory to pop up in game.
+<ul class="org-ul">
+<li>we&rsquo;ll connect the inventory with other elements of the game later.</li>
+</ul></li>
+</ul></li>
+<li>finally, lets not even focus on the item descriptions and instead just focus on having the item name in inventory.</li>
+<li>next, lets think about &ldquo;what is the main function of an inventory?&rdquo;
+<ul class="org-ul">
+<li>an inventory is meant to store items that the user collects.</li>
+<li>the user should be able to quickly access an item from the inventory at any point in time.</li>
+</ul></li>
+<li>lets translate these ideas back to code.
+<ul class="org-ul">
+<li>a variable stores an object.
+<ul class="org-ul">
+<li>perhaps we can have different variables that each store an object.</li>
+<li>however, it would be impractical to make a ton of variables to perform this task.</li>
+</ul></li>
+</ul></li>
+<li>what can we use instead?
+<ul class="org-ul">
+<li>we wanted to store multiple variables that each have an object.</li>
+<li>what if we use a list instead? this would be more practical for a few reasons:
+<ul class="org-ul">
+<li>we can use one variable instead of multiple variables to hold all objects in inventory.</li>
+<li>we can easily access items as needed via index or value.</li>
+<li>if we need the inventory to have rows and columns, we can use a nested (two-dimensional) list to easily achieve this.</li>
+</ul></li>
+</ul></li>
+<li>now that we know we can use a list, we can implement it.</li>
+<li>as we&rsquo;re implementing it, we might think of ways to extend our simple inventory.
+<ul class="org-ul">
+<li>for example, to tie descriptions to an item name, we can use a dictionary, where the key is the item name and the value is the item&rsquo;s description.
+<ul class="org-ul">
+<li>we might also choose to create an Item namedtuple instead, where we can not only have the item name and description, but we can specify any statistics (stats) boosts or any special abilities gained from using the item.</li>
+</ul></li>
+</ul></li>
+<li>at the end, we can link our inventory to the player and the rest of our game before developing the GUI.</li>
+<li>this sort of thought process is applicable for any programming problem you come across, so it&rsquo;s important to get used to it now.</li>
+<li>let&rsquo;s do another example using code.</li>
+<li>let&rsquo;s say that we want to create a program that matches the logic of a vending machine.</li>
+<li>let&rsquo;s cut out some elements for now:
+<ul class="org-ul">
+<li>no GUI implementation.</li>
+<li>assume that there&rsquo;s only one item in the vending machine.</li>
+<li>assume that the vending machine only needs to take two coins for the user to get the item.</li>
+</ul></li>
+<li>if you&rsquo;ve taken ics 6b or eecs 31, you&rsquo;ve probably heard of finite state machines (FSM) before.
+<ul class="org-ul">
+<li>an FSM is a model with a finite number of states that changes from one state to another based on specific inputs.</li>
+</ul></li>
+<li>using this logic, we can think of a vending machine as having 3 states:
+<ul class="org-ul">
+<li>no coins have been inserted.</li>
+<li>one coin has been inserted.</li>
+<li>two coins have been inserted.</li>
+</ul></li>
+<li>I want to create a function that moves to the next state given the current state.
+<ul class="org-ul">
+<li>lets create a next_state function that takes in the current state as a parameter.</li>
+</ul></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #525252;"># </span><span style="color: #525252;">the function header will look something like this:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">pass</span>
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>since the states always move in a sequential order, lets create a list that holds all the states in order.
+<ul class="org-ul">
+<li>it makes sense to use a list since they&rsquo;re ordered and we can easily access elements via index.</li>
+<li>however, other data structures can be used to achieve a similar result.</li>
+</ul></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">states</span> = [<span style="color: #99bb66;">"0 coins"</span>, <span style="color: #99bb66;">"1 coin"</span>, <span style="color: #99bb66;">"2 coins"</span>]
+
+<span style="color: #525252;"># </span><span style="color: #525252;">now, lets implement next_state():</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">if</span> current == state[<span style="color: #dd8844; font-weight: bold;">0</span>]:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">1</span>]
+    <span style="color: #51afef;">elif</span> current == states[<span style="color: #dd8844; font-weight: bold;">1</span>]:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">2</span>]
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">return</span> current
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>we should also have some way to store the current state so we can pass it in as a parameter.
+<ul class="org-ul">
+<li>lets create a variable called current_state that does just that.</li>
+</ul></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">current_state</span> = states[<span style="color: #dd8844; font-weight: bold;">0</span>] <span style="color: #525252;"># </span><span style="color: #525252;">starts at 0 coins</span>
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>now lets test our function out with what we have so far:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">states</span> = [<span style="color: #99bb66;">"0 coins"</span>, <span style="color: #99bb66;">"1 coin"</span>, <span style="color: #99bb66;">"2 coins"</span>]
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">if</span> current == states[<span style="color: #dd8844; font-weight: bold;">0</span>]:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">1</span>]
+    <span style="color: #51afef;">elif</span> current == states[<span style="color: #dd8844; font-weight: bold;">1</span>]:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">2</span>]
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">return</span> current
+
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">__name__</span> == <span style="color: #99bb66;">"__main__"</span>:
+    <span style="color: #dcaeea;">current_state</span> = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span>(<span style="color: #dd8844; font-weight: bold;">3</span>):
+        <span style="color: #dcaeea;">current_state</span> = next_state(current_state)
+        <span style="color: #c678dd;">print</span>(current_state)
+
+</pre>
+</div>
+
+<pre class="example">
+1 coin
+2 coins
+0 coins
+</pre>
+
+
+<ul class="org-ul">
+<li>it looks like our function works as intended.</li>
+<li>lets change our states list so that our states are a little more user-friendly and descriptive.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">states</span> = [<span style="color: #99bb66;">"insert 2 coins"</span>, <span style="color: #99bb66;">"insert 1 coin"</span>, <span style="color: #99bb66;">"have a snack"</span>]
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">if</span> current == states[<span style="color: #dd8844; font-weight: bold;">0</span>]:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">1</span>]
+    <span style="color: #51afef;">elif</span> current == states[<span style="color: #dd8844; font-weight: bold;">1</span>]:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">2</span>]
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #dcaeea;">current</span> = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">return</span> current
+
+<span style="color: #525252;"># </span><span style="color: #525252;">lets test our function again.</span>
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">__name__</span> == <span style="color: #99bb66;">"__main__"</span>:
+    <span style="color: #dcaeea;">current_state</span> = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span>(<span style="color: #dd8844; font-weight: bold;">3</span>):
+        <span style="color: #dcaeea;">current_state</span> = next_state(current_state)
+        <span style="color: #c678dd;">print</span>(current_state)
+
+</pre>
+</div>
+
+<pre class="example">
+insert 1 coin
+have a snack
+insert 2 coins
+</pre>
+
+
+<ul class="org-ul">
+<li>it&rsquo;s kind of annoying to set current_state equal to the next state every single time, so lets find a way to automatically change current<sub>state</sub> to the next state without reassignment.</li>
+<li>we can use a mutable object, such as a list, so that when current_state is passed into next_state, the list will be passed by reference rather than passed by assignment.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">states</span> = [<span style="color: #99bb66;">"insert 2 coins"</span>, <span style="color: #99bb66;">"insert 1 coin"</span>, <span style="color: #99bb66;">"have a snack"</span>]
+
+<span style="color: #dcaeea;">current_state</span> = [<span style="color: #99bb66;">"0 coins"</span>]
+
+<span style="color: #525252;"># </span><span style="color: #525252;">changing current_state to a list requires us to modify next_state as well:</span>
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">if</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>] == states[<span style="color: #dd8844; font-weight: bold;">0</span>]:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">1</span>]
+    <span style="color: #51afef;">elif</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>] == states[<span style="color: #dd8844; font-weight: bold;">1</span>]:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">2</span>]
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">return</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>]
+
+<span style="color: #525252;"># </span><span style="color: #525252;">lets test our function again.</span>
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">__name__</span> == <span style="color: #99bb66;">"__main__"</span>:
+    <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span>(<span style="color: #dd8844; font-weight: bold;">3</span>):
+        next_state(current_state)
+        <span style="color: #c678dd;">print</span>(current_state)
+
+</pre>
+</div>
+
+<pre class="example">
+['insert 2 coins']
+['insert 1 coin']
+['have a snack']
+</pre>
+
+
+<ul class="org-ul">
+<li>if we want to print out the current state without the square brackets, we can do something like this:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">states</span> = [<span style="color: #99bb66;">"insert 2 coins"</span>, <span style="color: #99bb66;">"insert 1 coin"</span>, <span style="color: #99bb66;">"have a snack"</span>]
+
+<span style="color: #dcaeea;">current_state</span> = [<span style="color: #99bb66;">"0 coins"</span>]
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">if</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>] == states[<span style="color: #dd8844; font-weight: bold;">0</span>]:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">1</span>]
+    <span style="color: #51afef;">elif</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>] == states[<span style="color: #dd8844; font-weight: bold;">1</span>]:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">2</span>]
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">return</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>]
+
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">__name__</span> == <span style="color: #99bb66;">"__main__"</span>:
+    <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span>(<span style="color: #dd8844; font-weight: bold;">3</span>):
+        <span style="color: #525252;"># </span><span style="color: #525252;">print the return value of next state, which is current[0] instead of current</span>
+        <span style="color: #c678dd;">print</span>(next_state(current_state))
+
+</pre>
+</div>
+
+<pre class="example">
+insert 2 coins
+insert 1 coin
+have a snack
+</pre>
+
+
+<ul class="org-ul">
+<li>alternatively, we can also index into current_state.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #dcaeea;">states</span> = [<span style="color: #99bb66;">"insert 2 coins"</span>, <span style="color: #99bb66;">"insert 1 coin"</span>, <span style="color: #99bb66;">"have a snack"</span>]
+
+<span style="color: #dcaeea;">current_state</span> = [<span style="color: #99bb66;">"0 coins"</span>]
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">next_state</span>(current):
+    <span style="color: #51afef;">if</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>] == states[<span style="color: #dd8844; font-weight: bold;">0</span>]:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">1</span>]
+    <span style="color: #51afef;">elif</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>] == states[<span style="color: #dd8844; font-weight: bold;">1</span>]:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">2</span>]
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #dcaeea;">current</span>[<span style="color: #dd8844; font-weight: bold;">0</span>] = states[<span style="color: #dd8844; font-weight: bold;">0</span>]
+    <span style="color: #51afef;">return</span> current[<span style="color: #dd8844; font-weight: bold;">0</span>]
+
+<span style="color: #525252;"># </span><span style="color: #525252;">testing our function again.</span>
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">__name__</span> == <span style="color: #99bb66;">"__main__"</span>:
+    <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span>(<span style="color: #dd8844; font-weight: bold;">3</span>):
+        next_state(current_state)
+        <span style="color: #c678dd;">print</span>(current_state[<span style="color: #dd8844; font-weight: bold;">0</span>])
+
+</pre>
+</div>
+
+<pre class="example">
+insert 2 coins
+insert 1 coin
+have a snack
+</pre>
+
+
+<ul class="org-ul">
+<li>although we could continue making changes to our code, any significant advancements to our code would not longer be in the scope of this class, so I&rsquo;ll stop here for now.</li>
+<li>once we have the basic logic down, we can extend our code further.
+<ul class="org-ul">
+<li>for example, I could ask the user for the item number that corresponds to the item they want and print it out.</li>
+<li>I can have these items stored in a list of namedtuples with their item name, number, and price.</li>
+</ul></li>
+<li>so before you try to solve a problem all at once, consider breaking it into smaller parts and solving one thing at a time.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org519c7a7" class="outline-2">
+<h2 id="org519c7a7"><span class="section-number-2">2.</span> understand the problem you&rsquo;re trying to solve</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>one important reason to start labs early is because it takes some time to even just wrap your head around a problem.</li>
+<li>you&rsquo;ll want to read the requirements for a program a few times.
+<ul class="org-ul">
+<li>as you&rsquo;re reading, think about how you&rsquo;d go about implementing parts of it.
+<ul class="org-ul">
+<li>personally, I like to write my ideas down on paper.
+<ul class="org-ul">
+<li>writing things down on paper allows you to easily visualize your thoughts using maps, graphs, etc.</li>
+</ul></li>
+<li>maybe there&rsquo;s a noun in the instructions that should have fields associated with it, so you might wanna use a namedtuple.</li>
+<li>maybe there&rsquo;s some collection of related items involved, so you might want to store them in some sort of data structure.</li>
+<li>maybe you want to continue processing information until the user tells you otherwise, so you might wanna use a while loop with a sentinel value.</li>
+<li>maybe there&rsquo;s a common task that&rsquo;s performed in multiple parts of your code, so you might wanna use a function.</li>
+<li>maybe certain tasks are only executed under specific constraints, so you might wanna use branching.</li>
+</ul></li>
+<li>use pseudocode, data structure visualization, and control flow graphs to map out your program.
+<ul class="org-ul">
+<li>pseudocode outline&rsquo;s a program&rsquo;s algorithm in a high-level, readable format.
+<ul class="org-ul">
+<li>don&rsquo;t have to worry about syntax.</li>
+</ul></li>
+<li>data structure visualization is useful when your program needs to access and modify a nested data structure.</li>
+<li>control flow graphs illustrate all possible execution paths in a program.
+<ul class="org-ul">
+<li>useful if your program requires a lot of branches and loops with break and continue.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>many programs involve 3 main components: input, manipulation, and output.
+<ul class="org-ul">
+<li>they&rsquo;re all pretty self-explanatory.</li>
+<li>similar to a function.
+<ul class="org-ul">
+<li>inputs are its parameters.</li>
+<li>function body processes information.</li>
+<li>output(s) is its return statement.</li>
+</ul></li>
+<li>there&rsquo;s this idea in programming called black box testing.
+<ul class="org-ul">
+<li>from the user&rsquo;s perspective, they don&rsquo;t know how a program works.</li>
+<li>however, they do know that they expect a specific output to be produced based on what they input.</li>
+<li>this can be applied when you&rsquo;re programming:
+<ul class="org-ul">
+<li>think about different inputs and their corresponding outputs that a user might test for a program/function you&rsquo;re creating.</li>
+<li>think about similar patterns that occur with the input/output relationships.</li>
+<li>once you think you&rsquo;ve figured it out, implement it and test it with the inputs and outputs you came up with.</li>
+<li>if you find that your code&rsquo;s not working as expected, debug your code until it does.</li>
+</ul></li>
+</ul></li>
+<li>good practice is to assert constraints on the user&rsquo;s input and output.
+<ul class="org-ul">
+<li>for example, this can be achieved through precondition and postcondition asserts.
+<ul class="org-ul">
+<li>add descriptive messages to each assert so it&rsquo;s easier to debug and more user-friendly.</li>
+</ul></li>
+<li>this allows you to check data types and other conditions before information is processed and before the output is shown to the user.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org09f569b" class="outline-2">
+<h2 id="org09f569b"><span class="section-number-2">3.</span> program implementation</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>once you&rsquo;ve familiarized yourself with the task at hand, start programming.
+<ul class="org-ul">
+<li>implement solutions to parts of the problem that you&rsquo;ve already wrapped your head around.</li>
+<li>you might find that as you&rsquo;re writing code, you&rsquo;re able to come up with solutions that match other requirements.
+<ul class="org-ul">
+<li>write/type out these solutions while you still remember them. (ex: creating TODO comments in your code)</li>
+</ul></li>
+<li>if you find yourself stuck on a code block&rsquo;s implementation, create FIXME comments in your code or take a break before coming back to them.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3ade7d0" class="outline-2">
+<h2 id="org3ade7d0"><span class="section-number-2">4.</span> incremental testing</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>as you&rsquo;re implementing different functions, you&rsquo;ll want to test them one at a time before moving on to the next step.
+<ul class="org-ul">
+<li>for now, you can test them by passing in different inputs (arguments) and seeing if the corresponding output is returned.</li>
+<li>think about edge cases that might break your code and test them out.
+<ul class="org-ul">
+<li>continue debugging your code until it works as intended.</li>
+</ul></li>
+<li>in later classes, you&rsquo;ll use unit testing to develop test cases that can easily be rerun over and over again.
+<ul class="org-ul">
+<li>these unit tests are often placed in a separate test file/folder.</li>
+</ul></li>
+</ul></li>
+<li>good practice is to use git for version control, committing after you&rsquo;ve successfully implemented a new function/method and writing a brief but descriptive comment to go along with it.
+<ul class="org-ul">
+<li>you&rsquo;ll use git more often in future classes.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org28c952c" class="outline-2">
+<h2 id="org28c952c"><span class="section-number-2">5.</span> debugging</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>if your code is producing an error, read the error message.
+<ul class="org-ul">
+<li>the console will tell you what type of error is occurring and roughly around what line(s) caused the error.</li>
+<li>figure out whether one or multiple test cases are causing this error.
+<ul class="org-ul">
+<li>usually, if it&rsquo;s just one, it may indicate that some additional constraint needs to be added for the test case to pass (ex: dividing by 0)</li>
+<li>if it&rsquo;s multiple, there&rsquo;s likely some sort of common attribute that your test inputs have that hasn&rsquo;t been accounted for.</li>
+<li>if it&rsquo;s all, there&rsquo;s likely something wrong with your code syntactically.</li>
+</ul></li>
+</ul></li>
+<li>print statements are your best friend when debugging code. (primarily for logical errors)
+<ul class="org-ul">
+<li>use them to make sure variables and functions (including helper functions) have correct expected values.</li>
+<li>continue testing with different inputs to figure out where/when the pattern&rsquo;s amiss.</li>
+</ul></li>
+<li>ask others for help.
+<ul class="org-ul">
+<li>there&rsquo;s a reason lab assignments are meant to be completed in pairs rather than individually.</li>
+<li>many programs in this world were developed in large groups/teams rather than alone.</li>
+<li>feel free to ask your peers or mentors around you if you need any assistance.
+<ul class="org-ul">
+<li>that&rsquo;s what they&rsquo;re here for.</li>
+</ul></li>
+</ul></li>
+<li>as you&rsquo;re debugging, you might find that you need to make more significant changes to your original model/implementation.
+<ul class="org-ul">
+<li>feel free to make as many changes as you need.</li>
+<li>as tedious as it sounds to restructure your code, doing this might make your code more robust, making it less prone to errors and improving long-term performance.</li>
+<li>the process of programming oftentimes goes through many iterations before reaching a &ldquo;finalized&rdquo; product (even then, it still needs to be consistently maintained and updated).
+<ul class="org-ul">
+<li>therefore, you should allow your code to be open/flexible to change.</li>
+<li>making significant improvements for better readability, clarity, and structure will assist others (and yourself) who look at your code many years later.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga427f67" class="outline-2">
+<h2 id="orga427f67"><span class="section-number-2">6.</span> the S in SOLID principles</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>SOLID principles are primarily used in object-oriented programming, but these principles are applicable almost anywhere.</li>
+<li>most of these principles apply to classes, which you guys will learn in later courses, so for now, I&rsquo;ll just describe S:</li>
+<li>S = Single Responsibility Principle
+<ul class="org-ul">
+<li>think about a grocery list. what sort of ways would you want to manipulate it?</li>
+<li>you may want to add, remove, and reorder items.</li>
+<li>you could create one function based on the user&rsquo;s input that supports adding, removing, and reordering items.
+<ul class="org-ul">
+<li>however, programming this may make your code harder to read since you generally don&rsquo;t want your functions/methods to be too long.</li>
+<li>in addition, you may have a (somewhat) harder time debugging your code since it&rsquo;s more difficult to identify/trace where errors occurred.</li>
+<li>doesn&rsquo;t allow for proper modularity and organization.</li>
+</ul></li>
+</ul></li>
+<li>grocery list example (everything in one function):</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">main</span>():
+    <span style="color: #dcaeea;">grocery_list</span> = []
+    <span style="color: #dcaeea;">option_dict</span> = {<span style="color: #99bb66;">"a"</span>: <span style="color: #99bb66;">"add item"</span>, <span style="color: #99bb66;">"r"</span>: <span style="color: #99bb66;">"remove item"</span>, <span style="color: #99bb66;">"o"</span>: <span style="color: #99bb66;">"reorder items"</span>,
+                   <span style="color: #99bb66;">"p"</span>: <span style="color: #99bb66;">"print grocery list"</span>, <span style="color: #99bb66;">"q"</span>: <span style="color: #99bb66;">"quit"</span>}
+    <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"MENU"</span>)
+    <span style="color: #51afef;">for</span> letter, option <span style="color: #51afef;">in</span> option_dict.items():
+        <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"</span>{letter}<span style="color: #99bb66;"> - </span>{option}<span style="color: #99bb66;">"</span>)
+    <span style="color: #c678dd;">print</span>()
+    <span style="color: #dcaeea;">choice</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Choose an option:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+    <span style="color: #51afef;">while</span> <span style="color: #a9a1e1;">True</span>:
+        <span style="color: #51afef;">if</span> choice == <span style="color: #99bb66;">"q"</span>:
+            <span style="color: #51afef;">break</span>
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"a"</span>:
+            <span style="color: #dcaeea;">new_item</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the name of the item you'd like to add:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+            grocery_list.append(new_item)
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"r"</span>:
+            <span style="color: #dcaeea;">item_to_remove</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the name of the item you'd like to remove:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+            grocery_list.remove(item_to_remove)
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"o"</span>:
+            <span style="color: #dcaeea;">index1</span> = <span style="color: #c678dd;">int</span>(<span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the index of the first element that</span>
+<span style="color: #99bb66;">            you'd like to swap with the second:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>))
+            <span style="color: #dcaeea;">index2</span> = <span style="color: #c678dd;">int</span>(<span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the index of the second element that</span>
+<span style="color: #99bb66;">            you'd like to swap with the first:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>))
+            <span style="color: #dcaeea;">grocery_list</span>[<span style="color: #dcaeea;">index1</span>], <span style="color: #dcaeea;">grocery_list</span>[index2] =
+            grocery_list[index2], grocery_list[index1]
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"p"</span>:
+            <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"GROCERY LIST"</span>)
+            <span style="color: #51afef;">if</span> <span style="color: #c678dd;">len</span>(grocery_list) == <span style="color: #dd8844; font-weight: bold;">0</span>:
+                <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"nothing in grocery list right now."</span>)
+            <span style="color: #51afef;">else</span>:
+                <span style="color: #51afef;">for</span> item <span style="color: #51afef;">in</span> grocery_list:
+                    <span style="color: #c678dd;">print</span>(item)
+            <span style="color: #c678dd;">print</span>()
+
+        <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"MENU"</span>)
+        <span style="color: #51afef;">for</span> letter, option <span style="color: #51afef;">in</span> option_dict.items():
+            <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"</span>{letter}<span style="color: #99bb66;"> - </span>{option}<span style="color: #99bb66;">"</span>)
+        <span style="color: #c678dd;">print</span>()
+        <span style="color: #dcaeea;">choice</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Choose an option:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>instead, you could create three separate functions that deal with adding, removing, and reordering items with a fourth function that processes the user&rsquo;s input and executes the correct function.
+<ul class="org-ul">
+<li>easier to read and will likely have more descriptive function names.</li>
+<li>can reuse these functions in multiple parts of your code (or in other source files).</li>
+<li>if something goes wrong in your processing function, it&rsquo;s easier to pinpoint the source of your problem.</li>
+</ul></li>
+</ul>
+<ul class="org-ul">
+<li>grocery list example (multiple functions):</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">add_item</span>(a_grocery_list):
+    <span style="color: #dcaeea;">new_item</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the name ofo the item you'd like to add:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+    a_grocery_list.append(new_item)
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">remove_item</span>(a_grocery_list):
+    <span style="color: #dcaeea;">item_to_remove</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the name of the item you'd like to remove:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+    a_grocery_list.remove(item_to_remove)
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">swap_items</span>(a_grocery_list):
+    <span style="color: #dcaeea;">index1</span> = <span style="color: #c678dd;">int</span>(<span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the index of the first element that</span>
+<span style="color: #99bb66;">    you'd like to swap with the second:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>))
+    <span style="color: #dcaeea;">index2</span> = <span style="color: #c678dd;">int</span>(<span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Enter the index of the second element that</span>
+<span style="color: #99bb66;">    you'd like to swap with the first:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>))
+    <span style="color: #dcaeea;">a_grocery_list</span>[<span style="color: #dcaeea;">index1</span>], <span style="color: #dcaeea;">a_grocery_list</span>[index2] =
+    a_grocery_list[index2], a_grocery_list[index1]
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">print_items</span>(a_grocery_list):
+    <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"GROCERY LIST"</span>)
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">len</span>(a_grocery_list) == <span style="color: #dd8844; font-weight: bold;">0</span>:
+        <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"nothing in grocery list right now."</span>)
+    <span style="color: #51afef;">else</span>:
+        <span style="color: #51afef;">for</span> item <span style="color: #51afef;">in</span> a_grocery_list:
+            <span style="color: #c678dd;">print</span>(item)
+    <span style="color: #c678dd;">print</span>()
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">print_menu</span>():
+    <span style="color: #dcaeea;">option_dict</span> = {<span style="color: #99bb66;">"a"</span>, <span style="color: #99bb66;">"add item"</span>, <span style="color: #99bb66;">"r"</span>: <span style="color: #99bb66;">"remove item"</span>, <span style="color: #99bb66;">"o"</span>: <span style="color: #99bb66;">"reorder items"</span>,
+                   <span style="color: #99bb66;">"p"</span>: <span style="color: #99bb66;">"print grocery list"</span>, <span style="color: #99bb66;">"q"</span>: <span style="color: #99bb66;">"quit"</span>}
+    <span style="color: #c678dd;">print</span>(<span style="color: #99bb66;">"MENU"</span>)
+    <span style="color: #51afef;">for</span> letter, option <span style="color: #51afef;">in</span> option_dict.items():
+        <span style="color: #c678dd;">print</span>(f<span style="color: #99bb66;">"</span>{letter}<span style="color: #99bb66;"> - </span>{option}<span style="color: #99bb66;">"</span>)
+    <span style="color: #c678dd;">print</span>()
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">main</span>():
+    <span style="color: #dcaeea;">grocery_list</span> = []
+    print_menu()
+    <span style="color: #dcaeea;">choice</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Choose an option:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+    <span style="color: #51afef;">while</span> <span style="color: #a9a1e1;">True</span>:
+        <span style="color: #51afef;">if</span> choice == <span style="color: #99bb66;">"q"</span>:
+            <span style="color: #51afef;">break</span>
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"a"</span>:
+            add_item(grocery_list)
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"r"</span>:
+            remove_item(grocery_list)
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"o"</span>:
+            swap_items(grocery_list)
+        <span style="color: #51afef;">elif</span> choice == <span style="color: #99bb66;">"p"</span>:
+            print_items(grocery_list)
+
+    print_menu()
+    <span style="color: #dcaeea;">choice</span> = <span style="color: #c678dd;">input</span>(<span style="color: #99bb66;">"Choose an option:</span><span style="color: #a9a1e1;">\n</span><span style="color: #99bb66;">"</span>)
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>the Single Responsibility Principle states that a function (or a class) should only have one responsibility.
+<ul class="org-ul">
+<li>closely aligns with separation of concerns, which states that you should split your program into multiple sections that each address a different concern.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga07c88f" class="outline-2">
+<h2 id="orga07c88f"><span class="section-number-2">7.</span> other good practices</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>write brief but descriptive comments for your code.
+<ul class="org-ul">
+<li>useful when you or someone else has to look at your code again.</li>
+</ul></li>
+<li>create meaningful variable and function names.
+<ul class="org-ul">
+<li>helps with readability and contextualization.</li>
+</ul></li>
+<li>write out type annotations for your functions.
+<ul class="org-ul">
+<li>this includes types for your parameters and return values.</li>
+<li>you&rsquo;ll learn more about this in future classes.</li>
+</ul></li>
+<li>don&rsquo;t write out long functions.
+<ul class="org-ul">
+<li>as mentioned earlier, it makes it harder to debug your code and is less modular.</li>
+<li>instead, find ways to refactor your code into multiple, small functions.</li>
+</ul></li>
+<li>statements should not be too long.
+<ul class="org-ul">
+<li>generally no more than 80 characters per line.</li>
+<li>long statements can be harder to read (and requires you to scroll back and forth).</li>
+<li>instead, find ways to truncate the line and specify where line breaks occur.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ashley Pock</p>
+<p class="date">Created: 11/17/2025 Mon</p>
+</div>
+</body>
+</html>
