@@ -1,0 +1,40 @@
+<h1>Resolved Issues</h1> 
+
+<p>In previous clubs/organizations, I've noticed a lack of proper knowledge transfer. The only way I'm able to gain the information experienced engineers know is by asking them a lot of questions. I don't want others to go through those issues, so this page will be dedicated to all the times the team and I have had to collaborate in order to troubleshoot problems that arise.</p>
+
+<h2>Table of Contents</h2> 
+<ul> 
+  <li><a href="#vga-connector">1. VGA Connector</a></li> 
+</ul> 
+
+<hr>
+
+<section id="vga-connector">
+<h2>1. VGA Connector</h2> 
+
+<p>Date: 10/29/2026</p>
+
+<p>Recently, we started propulsion integration testing. My teammates and I tried to get the battery management system (BMS) up and running, but the connection failed when we tried connecting to our computer.</p> 
+
+<img src="../../photos/notes/resolved_issues/bms_connection_failed.png" alt="failed BMS connection" style="width: 500px; max-width: 100%; height: auto;">
+
+<p><b>Our Current Layout:</b></p> 
+<ul> 
+  <li>The power supply was set to 12V and 0.2 Amps.</li> 
+  <li>Power (red) and Ground (black) from the power supply were clipped onto the blue and white wires on the BMS, respectively.</li> 
+  <li>The battery packs were disconnected from the BMS since they were not necessary for the connection.</li> 
+  <li>The LED indicator on the BMS was red, which typically means there are errors, but it's still possible to connect despite that.</li> 
+  <li>Each time we tried connecting, the CAN adapter would flash red, switch to green for a few moments, then switch back to red.</li> 
+</ul> 
+
+<p><b>Ideas We Tried:</b></p> 
+<ul>
+  <li>We tried all of our computers and all of the baud rates each time we attempted to connect.</li>
+  <li>We tried swapping power supplies, USB cables, and CAN adapters.</li> 
+</ul> 
+
+<p><b>The Solution:</b></p>
+<p>Ultimately, the issue was with our VGA connector (the component that directly hooks up to the CAN adapter). Its Ground wire accidentally got pulled off from the screw terminal connector. To solve this, one of my teammates cut and stripped the Ground wire and I assisted with screwing the wire back into Pin 5 (once we found the proper documentation). If the Power wire ever comes off, it belongs in Pin 3.</p>
+</section>
+
+<p>Author: Ashley Pock<br>Created: 11/10/2026 Tues<br>Last Modified: 11/10/2026 Tues</p>
